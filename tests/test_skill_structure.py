@@ -143,6 +143,9 @@ def check_no_leakage():
     ok = True
     # Scan tracked-ish files (skip .git, tests/testdata, etc.)
     skip_dirs = {'.git', 'node_modules', 'out', '.audit', 'tests'}
+    # Some files legitimately contain the legacy names as part of historical
+    # records (CHANGELOG), test fixtures, or the regex source itself.
+    whitelisted_paths = {'CHANGELOG.md'}
     for path in REPO_ROOT.rglob('*'):
         if not path.is_file():
             continue
@@ -150,6 +153,8 @@ def check_no_leakage():
         if any(rel.startswith(d + '/') or rel == d for d in skip_dirs):
             continue
         if rel.endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp', '.ipynb')):
+            continue
+        if rel in whitelisted_paths:
             continue
         try:
             text = path.read_text(encoding='utf-8', errors='ignore')

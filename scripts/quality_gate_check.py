@@ -1,5 +1,5 @@
 """
-quality_gate_check.py — G1/G2/G3 quality gates (gsea-explorer v0.2.1)
+quality_gate_check.py — G1/G2/G3 quality gates (gsealens-explorer v0.2.1)
 Checks the synthesis_draft for: data support, anti-patterns, limitations.
 
 Usage:

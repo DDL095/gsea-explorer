@@ -1,15 +1,15 @@
-# Contributing to gsea-explorer
+# Contributing to gsealens-explorer
 
-Thanks for your interest in improving gsea-explorer. This document describes the
+Thanks for your interest in improving gsealens-explorer. This document describes the
 minimum expectations for contributions and the review process.
 
 ## Repository layout
 
 ```
-gsea-explorer/
+gsealens-explorer/
 ├── SKILL.md                       # Master skill definition (read by the agent runtime)
-├── gsea-explorer.agent.md         # Agent role / phase contract
-├── gsea-explorer.md               # Compact role overview
+├── gsealens-explorer.agent.md         # Agent role / phase contract
+├── gsealens-explorer.md               # Compact role overview
 ├── agents/                        # Sub-agent role definitions
 ├── scripts/                       # R / Python / shell helpers invoked by the agent
 ├── profiles/                      # Per-platform schema mappings (YAML)
@@ -22,7 +22,7 @@ gsea-explorer/
 ```
 
 The skill ships as a self-contained bundle: the agent runtime reads `SKILL.md`
-and `gsea-explorer.agent.md`, then loads supporting material on demand.
+and `gsealens-explorer.agent.md`, then loads supporting material on demand.
 
 ## Ground rules
 
@@ -63,7 +63,7 @@ and `gsea-explorer.agent.md`, then loads supporting material on demand.
 1. Update `CHANGELOG.md`: move `[Unreleased]` entries to a new version section
    and date-stamp it.
 2. Update the `version` field in `SKILL.md` frontmatter and
-   `gsea-explorer.agent.md` description.
+   `gsealens-explorer.agent.md` description.
 3. Tag the release: `git tag -a v0.6.0 -m "release notes"` then push tags.
 4. Publish a GitHub Release with the changelog excerpt.
 

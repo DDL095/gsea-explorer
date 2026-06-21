@@ -1,17 +1,17 @@
 cff-version: 1.2.0
-title: "gsea-explorer: stateful exploratory analysis agent for GSEA enrichment results"
+title: "gsealens-explorer: stateful exploratory analysis agent for GSEA enrichment results"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
   - alias: DDL095
-repository-code: "https://github.com/DDL095/gsea-explorer"
-url: "https://github.com/DDL095/gsea-explorer"
+repository-code: "https://github.com/DDL095/gsealens-explorer"
+url: "https://github.com/DDL095/gsealens-explorer"
 abstract: >-
-  gsea-explorer is a stateful, question-driven exploratory analysis framework
+  gsealens-explorer is a stateful, question-driven exploratory analysis framework
   for GSEA enrichment results. It reads GSEA Capsule RDS (gsealens) or generic
   outputs (fgsea / clusterProfiler / enrichit), asks the user for experimental
   context at decision points, orchestrates cross-skill evidence gathering, and
-  produces auditable Markdown reports using a GSEAlens-style |NES| enrichment
+  produces auditable Markdown reports using a |NES| enrichment direction enrichment
   direction framework. Supports multi-tissue crosstalk analysis and parallel
   deep-dive discussion across biological themes.
 keywords:

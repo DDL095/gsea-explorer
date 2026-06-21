@@ -1,8 +1,8 @@
 """
-test_skill_structure.py — Structural smoke test for the gsea-explorer repo.
+test_skill_structure.py — Structural smoke test for the gsealens-explorer repo.
 
 Runs without R / Python deps beyond the stdlib. Verifies:
-  1. SKILL.md and gsea-explorer.agent.md have valid YAML frontmatter with the
+  1. SKILL.md and gsealens-explorer.agent.md have valid YAML frontmatter with the
      required fields.
   2. Every file referenced by scripts/ exists (no broken cross-references).
   3. Every profile YAML declares platform, status, and result_fields.
@@ -22,6 +22,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
+# Project name (must stay in sync with frontmatter name / repo URL / CITATION.cff).
+PROJECT_NAME = "gsealens-explorer"
+
 # Patterns that indicate personal-data leakage and should never be committed.
 LEAKAGE_PATTERNS = [
     # Absolute Windows paths starting with a drive letter
@@ -30,7 +33,10 @@ LEAKAGE_PATTERNS = [
     # Known study-name patterns used in private examples
     re.compile(r'ZYH_衰老|HSG_肺肿瘤|XSH_达乌尔黄鼠', re.IGNORECASE),
     # Lab usernames
-    re.compile(r'\\b(?:sealgod|Administrator)\\b', re.IGNORECASE),
+    re.compile(r'\b(?:sealgod|Administrator)\b', re.IGNORECASE),
+    # Legacy project name (must stay renamed — broad disclaimer for Broad's tool)
+    re.compile(r'\bgsea-explorer\b(?!-)', re.IGNORECASE),
+    re.compile(r'\bGSEA Explorer\b(?!-)', re.IGNORECASE),
 ]
 
 REQUIRED_FRONTMATTER_SKILL = {"name", "description", "metadata"}
@@ -64,7 +70,7 @@ def check_frontmatter():
     print("[1] SKILL.md / agent.md frontmatter")
     ok = True
     skill_path = REPO_ROOT / 'SKILL.md'
-    agent_path = REPO_ROOT / 'gsea-explorer.agent.md'
+    agent_path = REPO_ROOT / 'gsealens-explorer.agent.md'
     for path, required, required_meta in [
         (skill_path, REQUIRED_FRONTMATTER_SKILL, REQUIRED_METADATA_KEYS),
         (agent_path, REQUIRED_FRONTMATTER_AGENT, None),

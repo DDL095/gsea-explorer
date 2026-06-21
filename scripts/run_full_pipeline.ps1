@@ -1,4 +1,4 @@
-# run_full_pipeline.ps1 — Windows driver for S0→S4 mechanical parts (gsea-explorer v0.2.1)
+# run_full_pipeline.ps1 — Windows driver for S0→S4 mechanical parts (gsealens-explorer v0.2.1)
 #
 # R execution policy (per r-interactive skill):
 #   - All R calls go through the R-UTF8 PowerShell alias (provided by
@@ -27,7 +27,7 @@
 #   S0  sniff platform (Rscript one-shot)
 #   S4  extract data (Rscript; for stateful use, source in R REPL)
 #   S5  scaffold evidence/ directory
-# S1-S3 and S6-S8 are LLM-driven, handled by gsea-explorer subagent.
+# S1-S3 and S6-S8 are LLM-driven, handled by gsealens-explorer subagent.
 
 param(
     [Parameter(Mandatory = $false)] [string] $RdsPath = "",
@@ -198,7 +198,7 @@ $readmePath = Join-Path $evidenceDir "README.md"
 $readmeContent = @"
 # Knowledge evidence directory (S5 outputs)
 
-The gsea-explorer subagent will populate this with:
+The gsealens-explorer subagent will populate this with:
 - pathway_knowledge.json — reactome-skill output
 - go_terms.json          — quickgo-skill output
 - target_disease.json    — gdm-opentargets-database output
@@ -213,7 +213,7 @@ Log "=== Mechanical pipeline complete ==="
 Log "Output dir: $OutputDir"
 Get-ChildItem $OutputDir | Format-Table Name, Length -AutoSize
 Log ""
-Log "Next steps (handled by gsea-explorer subagent):"
+Log "Next steps (handled by gsealens-explorer subagent):"
 Log "  S1  ask user 5 critical questions, write metadata.json"
 Log "  S2  generate 3-5 hypotheses, let user pick"
 Log "  S3  confirm analysis plan"

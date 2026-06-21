@@ -1,9 +1,9 @@
-# deploy_to_copilot.ps1 — Deploy (or refresh) the gsea-explorer skill into the
+# deploy_to_copilot.ps1 — Deploy (or refresh) the gsealens-explorer skill into the
 # local Copilot skills directory, without clobbering personal overrides.
 #
 # Usage (PowerShell):
 #   powershell -ExecutionPolicy Bypass -File deploy\deploy_to_copilot.ps1
-#   powershell -ExecutionPolicy Bypass -File deploy\deploy_to_copilot.ps1 -Target "D:\custom\skills\gsea-explorer"
+#   powershell -ExecutionPolicy Bypass -File deploy\deploy_to_copilot.ps1 -Target "D:\custom\skills\gsealens-explorer"
 #   powershell -ExecutionPolicy Bypass -File deploy\deploy_to_copilot.ps1 -DryRun
 #
 # Contract (see docs/architecture.md):
@@ -24,7 +24,7 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 
 if (-not $Target) {
-    $Target = Join-Path $env:USERPROFILE ".copilot\skills\gsea-explorer"
+    $Target = Join-Path $env:USERPROFILE ".copilot\skills\gsealens-explorer"
 }
 
 # --- Pre-flight ---

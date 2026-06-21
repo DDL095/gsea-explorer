@@ -1,6 +1,6 @@
 # tests/
 
-Smoke and regression tests for gsea-explorer.
+Smoke and regression tests for gsealens-explorer.
 
 ## Running
 
@@ -13,7 +13,7 @@ Requires only Python 3.8+ stdlib. No external packages needed.
 ## What's covered
 
 - `test_skill_structure.py`
-  - YAML frontmatter validity for `SKILL.md` and `gsea-explorer.agent.md`
+  - YAML frontmatter validity for `SKILL.md` and `gsealens-explorer.agent.md`
   - `profiles/*.yaml` declare `platform`, `status`, `result_fields`
   - Every script referenced in `SKILL.md` exists under `scripts/`
   - No personal-data leakage (Windows drive paths, study identifiers)

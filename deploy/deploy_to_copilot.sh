@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# deploy_to_copilot.sh — Deploy (or refresh) the gsea-explorer skill into the
+# deploy_to_copilot.sh — Deploy (or refresh) the gsealens-explorer skill into the
 # local Copilot skills directory, without clobbering personal overrides.
 #
 # Usage:
 #   bash deploy/deploy_to_copilot.sh
-#   bash deploy/deploy_to_copilot.sh --target ~/.copilot/skills/gsea-explorer
+#   bash deploy/deploy_to_copilot.sh --target ~/.copilot/skills/gsealens-explorer
 #   bash deploy/deploy_to_copilot.sh --dry-run
 #
 # Contract (see docs/architecture.md):
@@ -17,7 +17,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-TARGET="${HOME}/.copilot/skills/gsea-explorer"
+TARGET="${HOME}/.copilot/skills/gsealens-explorer"
 DRY_RUN=0
 
 while [[ $# -gt 0 ]]; do

@@ -1,4 +1,4 @@
-## extract_gsea_capsule.R — GSEA data extraction (gsea-explorer v0.2.1)
+## extract_gsea_capsule.R — GSEA data extraction (gsealens-explorer v0.2.1)
 ##
 ## Usage:
 ##   Rscript extract_gsea_capsule.R <rds_path> <output_dir> [contrast1] [contrast2] ...
@@ -88,7 +88,7 @@ summary_lines <- c("# GSEA 显著通路数量汇总",
                    sprintf("RDS: %s", basename(rds_path)),
                    sprintf("平台: %s", platform),
                    "",
-                   "> 使用 GSEAlens |NES| 富集方向框架: NES>0 = 富集在 left_group, NES<0 = 富集在 right_group",
+                   "> 使用 |NES| enrichment direction framework: NES>0 = 富集在 left_group, NES<0 = 富集在 right_group",
                    "")
 
 csv_outputs <- c()
@@ -100,7 +100,7 @@ for (cn in contrasts) {
   }
   full_df <- res_obj$data@result
 
-  # Summary counts (use GSEAlens |NES| framework: enriched_in direction, not up/down)
+  # Summary counts (use |NES| enrichment direction framework: enriched_in direction, not up/down)
   n_total <- nrow(full_df)
   n_sig   <- sum(full_df$p.adjust < 0.05, na.rm=TRUE)
   # Get left/right group names from contrast registry
@@ -149,11 +149,11 @@ for (cn in contrasts) {
   write.csv(le, le_path, row.names=FALSE); csv_outputs <- c(csv_outputs, le_path)
   log_msg(sprintf("  leading_edge: %d rows", nrow(le)))
 
-  # === GSEAlens 风格 |NES| 表 (Markdown) ===
+  # === |NES| enrichment direction |NES| 表 (Markdown) ===
   # 合并 Hallmark + GO:BP + Reactome/KEGG 显著通路, 按 |NES| 排序
   all_sig <- get_sig(x$results, cn, abs_nes=1.0, fdr_cut=0.25)
   if (nrow(all_sig) > 0) {
-    # 添加 GSEAlens 风格列
+    # 添加 |NES| enrichment direction列
     all_sig$abs_NES <- abs(all_sig$NES)
     all_sig$Enriched_In <- ifelse(all_sig$NES > 0, left_g, right_g)
     all_sig$Confidence <- ifelse(all_sig$abs_NES >= 1.5 & all_sig$p.adjust < 0.05, "High",
@@ -167,13 +167,13 @@ for (cn in contrasts) {
 
     # 生成 Markdown 表
     md_lines <- c()
-    md_lines <- c(md_lines, sprintf("# GSEAlens |NES| 富集方向表 — %s", cn))
+    md_lines <- c(md_lines, sprintf("# |NES| enrichment direction table — %s", cn))
     md_lines <- c(md_lines, "")
     md_lines <- c(md_lines, sprintf("**对比组**: %s vs %s", left_g, right_g))
     md_lines <- c(md_lines, sprintf("**统计概览**: 总 %d 通路 (FDR<0.25, |NES|≥1.0) | 高置信: %d | 中置信: %d | 低置信: %d",
                                     nrow(all_sig), n_high, n_med, n_low))
     md_lines <- c(md_lines, "")
-    md_lines <- c(md_lines, "| # | 通路 ID | \\|NES\\| | 富集方向 | FDR | Collection | 置信度 |")
+    md_lines <- c(md_lines, "| # | 通路 ID | \\|**|NES| enrichment direction framework**\| | 富集方向 | FDR | Collection | 置信度 |")
     md_lines <- c(md_lines, "|:--:|:-----------|:----:|:-----------:|:------:|:-----------|:------:|")
 
     for (i in seq_len(min(nrow(all_sig), 500))) {
@@ -189,7 +189,7 @@ for (cn in contrasts) {
 
     md_lines <- c(md_lines, "")
     md_lines <- c(md_lines, "**字段说明**:")
-    md_lines <- c(md_lines, "- **\\|NES\\|**: 绝对标准化富集分数。≥1.5 显著, ≥2.0 强富集")
+    md_lines <- c(md_lines, "- **\\|**|NES| enrichment direction framework**\|**: 绝对标准化富集分数。≥1.5 显著, ≥2.0 强富集")
     md_lines <- c(md_lines, sprintf("- **富集方向**: 富集在 %s (NES>0) 或 富集在 %s (NES<0)", left_g, right_g))
     md_lines <- c(md_lines, "- **FDR**: 多重检验校正 P 值。FDR < 0.25 是 MSigDB 标准阈值")
     md_lines <- c(md_lines, "- **置信度**: High (|NES|≥1.5+FDR<0.05) / Medium (|NES|≥1.0+FDR<0.25) / Low")

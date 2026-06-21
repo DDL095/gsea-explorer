@@ -1,6 +1,6 @@
 ---
-name: gsea-explorer
-description: 有状态的 GSEA 富集结果探索性分析。通过持久 R REPL 读取 GSEA Capsule RDS (gsealens) 或通用 GSEA 输出（fgsea / clusterProfiler / enrichit），在关键决策点通过 author_background_template.md 向用户收集实验背景，跨 skill 编排证据整合，产出可审计报告，采用 GSEAlens 风格的 |NES| 富集方向解读。支持多组织 crosstalk 分析（4-6 处理组 × 2+ 组织）。自动并行生成 5 个生物学主题的深度讨论（leading edge + C2 涌现 + 跨主题整合）。触发词：GSEA 富集分析、NES 解读、leading edge、多组织 crosstalk、生物主题讨论、MSigDB 涌现发现、rds_path 驱动。
+name: gsealens-explorer
+description: 有状态的 GSEA 富集结果探索性分析。通过持久 R REPL 读取 GSEA Capsule RDS (gsealens) 或通用 GSEA 输出（fgsea / clusterProfiler / enrichit），在关键决策点通过 author_background_template.md 向用户收集实验背景，跨 skill 编排证据整合，产出可审计报告，采用 |NES| enrichment direction framework 解读富集方向。支持多组织 crosstalk 分析（4-6 处理组 × 2+ 组织）。自动并行生成 5 个生物学主题的深度讨论（leading edge + C2 涌现 + 跨主题整合）。触发词：GSEA 富集分析、NES 解读、leading edge、多组织 crosstalk、生物主题讨论、MSigDB 涌现发现、rds_path 驱动。
 metadata:
   version: "0.5.5"
   last_updated: "2026-06-16"
@@ -8,7 +8,7 @@ metadata:
   task_type: open-ended
 ---
 
-# gsea-explorer v0.5.5 — 状态化 GSEA 深度探索框架 (含 rds_path 用户驱动 + 多对比组 cascade + Bioconductor 知识库)
+# gsealens-explorer v0.5.5 — 状态化 GSEA 深度探索框架 (含 rds_path 用户驱动 + 多对比组 cascade + Bioconductor 知识库)
 
 ## 0. 设计哲学
 
@@ -28,7 +28,7 @@ metadata:
 
 ### 1.0 获取 RDS 路径 (S0 第一动作, MANDATORY)
 
-**RDS 路径必须由用户在调用时显式提供**。gsea-explorer 不绑定任何特定文件夹或文件路径, 所有路径均参数化。
+**RDS 路径必须由用户在调用时显式提供**。gsealens-explorer 不绑定任何特定文件夹或文件路径, 所有路径均参数化。
 
 **工作流**:
 1. agent 被调用后, **第一个动作**是询问用户 rds_path (用 `vscode_askQuestions` 或接受用户输入)
@@ -115,11 +115,11 @@ for (coll in c("H", "C5", "C2")) {
 
 | 原则 | 规则 |
 |---|---|
-| **\|NES\| 绝对值** | 直接指示富集强度; \|NES\|≥1.5 显著, \|NES\|≥2.0 强富集 |
+| **\|**|NES| enrichment direction framework**| 绝对值** | 直接指示富集强度; \|**|NES| enrichment direction framework**|≥1.5 显著, \|**|NES| enrichment direction framework**|≥2.0 强富集 |
 | **富集方向** | NES>0 → 富集在 `{left_group}`; NES<0 → 富集在 `{right_group}` |
 | **禁止用词** | ❌ "inhibited" / "decreased" / "下调" / "NEG_in_left" / "被抑制" / "被激活" |
-| **允许用词** | ✅ "富集在 X 组" / "在 X 组中更集中" (基于 \|NES\|) |
-| **基因集名含方向** | 如 `*_DN` = 在某组下调; 结合名字 + \|NES\| 综合解读 |
+| **允许用词** | ✅ "富集在 X 组" / "在 X 组中更集中" (基于 \|**|NES| enrichment direction framework**|) |
+| **基因集名含方向** | 如 `*_DN` = 在某组下调; 结合名字 + \|**|NES| enrichment direction framework**| 综合解读 |
 
 ### NES 的本质 [必须理解]
 
@@ -260,16 +260,16 @@ classify_flip_mode <- function(rt_nes, rtp_nes, threshold = 1.5) {
 
 ### Markdown 转义规则 [强制]
 
-在 MD 表格中, `|NES|` 的 `|` 会被解析为表格分隔符。必须写成 `\|NES\|`:
-- ✅ `\|NES\| ≥ 1.5`
+在 MD 表格中, `|NES|` 的 `|` 会被解析为表格分隔符。必须写成 `\|**|NES| enrichment direction framework**|`:
+- ✅ `\|**|NES| enrichment direction framework**| ≥ 1.5`
 - ❌ `|NES| ≥ 1.5` (会破坏表格渲染)
 
-### 2.2 3 级置信度 (GSEAlens 标准)
+### 2.2 3 级置信度 (|NES| enrichment direction framework 标准)
 
 | 级别 | 条件 | 含义 |
 |---|---|---|
-| **High** | \|NES\|≥1.5 且 FDR<0.05 | 高置信,可直接用于结论 |
-| **Medium** | \|NES\|≥1.0 且 FDR<0.25 | 中置信,需交叉验证 |
+| **High** | \|**|NES| enrichment direction framework**|≥1.5 且 FDR<0.05 | 高置信,可直接用于结论 |
+| **Medium** | \|**|NES| enrichment direction framework**|≥1.0 且 FDR<0.25 | 中置信,需交叉验证 |
 | **Low** | 其他 | 低置信,仅供参考 |
 
 ### 2.3 描述模板
@@ -283,7 +283,7 @@ classify_flip_mode <- function(rt_nes, rtp_nes, threshold = 1.5) {
 ### 2.4 工作流 (LLM 解读步骤)
 
 1. **确认背景**: A = `{left_group}`, B = `{right_group}`
-2. **评估显著性**: FDR q-value (通常 < 0.25), \|NES\| 判断强度
+2. **评估显著性**: FDR q-value (通常 < 0.25), \|**|NES| enrichment direction framework**| 判断强度
 3. **分类描述**:
    - 富集在 A → "在 A 组激活的基因集"
    - 富集在 B → "在 B 组激活的基因集"
@@ -303,7 +303,7 @@ classify_flip_mode <- function(rt_nes, rtp_nes, threshold = 1.5) {
 
 **解读流程** (每个 collection 独立执行):
 1. 读取对应 CSV (如 `{contrast}_GOBP.csv`)
-2. 按 \|NES\| 排序, 取 top 50 显著通路
+2. 按 \|**|NES| enrichment direction framework**| 排序, 取 top 50 显著通路
 3. 按功能聚类 (如: 炎症相关 GO:BP 一组, 代谢相关一组, 细胞周期一组)
 4. 每个聚类给出生物学意义总结
 5. 识别聚类间的交叉 (如: 炎症 GO:BP + NF-κB Reactome = 一致的炎症主题)
@@ -316,9 +316,9 @@ classify_flip_mode <- function(rt_nes, rtp_nes, threshold = 1.5) {
 
 | 阈值 | 标准 | 用途 |
 |---|---|---|
-| **High** | FDR<0.05 且 \|NES\|≥1.5 | 主分析默认 |
-| **Medium** | FDR≥0.05 且 <0.25, 且 \|NES\|≥1.0 且 <1.5 | 候选/辅助分析 |
-| **Low** | FDR≥0.25 或 \|NES\|<1.0 | 不纳入 |
+| **High** | FDR<0.05 且 \|**|NES| enrichment direction framework**|≥1.5 | 主分析默认 |
+| **Medium** | FDR≥0.05 且 <0.25, 且 \|**|NES| enrichment direction framework**|≥1.0 且 <1.5 | 候选/辅助分析 |
+| **Low** | FDR≥0.25 或 \|**|NES| enrichment direction framework**|<1.0 | 不纳入 |
 
 ### 触发条件 (强制)
 
@@ -427,7 +427,7 @@ write.csv(joint_table, "cross_contrast_joint.csv", row.names=FALSE)
 4. **方向一致性**: 同一通路在不同对比组中方向是否一致?
    - 一致 → 稳定的生物学效应
    - 不一致 → 可能存在代偿或反馈机制
-5. **强度变化**: 同一通路在不同对比组中 \|NES\| 如何变化?
+5. **强度变化**: 同一通路在不同对比组中 \|**|NES| enrichment direction framework**| 如何变化?
    - 衰老组更强 → 衰老加剧该通路
    - 衰老组更弱 → 衰老可能抑制该通路的响应能力
 
@@ -462,7 +462,7 @@ cross_contrast_joint.md:
 ### 3.2 架构
 
 ```
-主 Agent (gsea-explorer)
+主 Agent (gsealens-explorer)
   ├── 组织 A subagent
   │     ├── R REPL: 读 RDS_A → 提取全量 → 生成 |NES| 表
   │     ├── SKILL: reactome/quickgo/opentargets/pubmed
@@ -493,7 +493,7 @@ cross_contrast_joint.md:
 3. 找出组织特异通路:
    - 仅在胰腺显著的 → 胰腺特异功能
    - 仅在肝脏显著的 → 肝脏特异功能
-4. 用 GSEAlens |NES| 描述框架:
+4. 用 |NES| enrichment direction framework:
    - ❌ "胰腺上调, 肝脏下调"
    - ✅ "该通路在两组织中均富集于治疗组, 但胰腺 |NES|=2.1 > 肝脏 |NES|=1.6"
 ```
@@ -501,7 +501,7 @@ cross_contrast_joint.md:
 ## 3a. MSigDB 本地知识库 — 强绑定涌现发现 (msigdb MCP) [v0.5.2, MANDATORY]
 
 ### 定位
-gsea-explorer 的核心能力是**涌现发现** — 不仅解读单条通路, 还要从数十条显著通路的 BRIEF/FULL 描述中提炼出跨通路的共性主题, 发现 LLM 无法从名字直接推断的生物学连接。MSigDB 本地 MCP 是这条涌现链路的**核心基础设施**, 在每个关键阶段都被强制调用。
+gsealens-explorer 的核心能力是**涌现发现** — 不仅解读单条通路, 还要从数十条显著通路的 BRIEF/FULL 描述中提炼出跨通路的共性主题, 发现 LLM 无法从名字直接推断的生物学连接。MSigDB 本地 MCP 是这条涌现链路的**核心基础设施**, 在每个关键阶段都被强制调用。
 
 **与 R 包 `msigdbr` 的关键差异**:
 - `msigdbr`: 只给基因列表, 无 BRIEF/FULL/PMID/AUTHORS
@@ -803,7 +803,7 @@ S2-S7b (后续所有阶段)
 
 ```
 用户: "帮我分析这个 GSEA 结果: <rds_path>"
-→ 主 agent 启动 gsea-explorer subagent
+→ 主 agent 启动 gsealens-explorer subagent
 → subagent 从 S0 开始
 ```
 
@@ -811,7 +811,7 @@ S2-S7b (后续所有阶段)
 
 ```
 用户: "我有两个组织的 GSEA 结果, 一个是胰腺, 一个是肝脏"
-→ 主 agent 启动 2 个 gsea-explorer subagent (并行)
+→ 主 agent 启动 2 个 gsealens-explorer subagent (并行)
 → 各自独立完成 S0-S6
 → 主 agent 调用 crosstalk 汇总 (S6b)
 → 输出: tissue_A_report.md + tissue_B_report.md + crosstalk_report.md
@@ -834,7 +834,7 @@ S2-S7b (后续所有阶段)
 
 **架构**:
 ```
-主 Agent (gsea-explorer v0.5.5)
+主 Agent (gsealens-explorer v0.5.5)
   ├── Subagent A-E (核心 5 主题)
   ├── Subagent F1 (新, v0.5.5 强制) — CGP 全集 (~740 独立通路)
   ├── Subagent F2 (新, v0.5.5 强制) — WikiPathways/KEGG_MEDICUS/BIOCARTA/PID
@@ -888,7 +888,7 @@ S2-S7b (后续所有阶段)
 #### 4.5.3 Subagent Prompt 模板 (强制规范)
 
 ```markdown
-# 你是 gsea-explorer v0.5.5 subagent {F1-F4 或 A-E}
+# 你是 gsealens-explorer v0.5.5 subagent {F1-F4 或 A-E}
 
 # 工作目录
 {out_dir}
@@ -957,13 +957,13 @@ df_sig <- df[df$p.adjust < 0.05 & abs(df$NES) >= 1.0, ]
 | Collection | 通路数 | 提取策略 |
 |---|---|---|
 | H (Hallmark) | 50 | 全部 (含不显著的) |
-| C5:GO:BP | ~数千显著 | 全部显著 (FDR<0.05, \|NES\|≥1.0) |
+| C5:GO:BP | ~数千显著 | 全部显著 (FDR<0.05, \|**|NES| enrichment direction framework**|≥1.0) |
 | C2:CP:REACTOME | ~数百显著 | 全部显著 |
 | C2:CP:KEGG | ~数百显著 | 全部显著 |
 | C5:GO:CC / GO:MF | 可选 | 按需 |
 | C7 (ImmuneSigDB) | 可选 | 免疫相关研究时启用 |
 
-### 5.3 输出格式 (GSEAlens 风格)
+### 5.3 输出格式 (|NES| enrichment direction)
 
 CSV 列:
 - `ID` — 通路名
@@ -980,7 +980,7 @@ CSV 列:
 
 ### 核心规则
 
-> **gsea-explorer 必须对 RDS 中所有 subcollection 的 High 显著通路进行全量深度解读, 不能只覆盖 H/C5/C2:REACTOME/C2:KEGG 4 个。**
+> **gsealens-explorer 必须对 RDS 中所有 subcollection 的 High 显著通路进行全量深度解读, 不能只覆盖 H/C5/C2:REACTOME/C2:KEGG 4 个。**
 
 ### 触发条件 (强制)
 - 任何 RDS 包含 ≥5 个 subcollection 时 (本研究 26 个), **必须全量覆盖**
@@ -1346,7 +1346,7 @@ plt.savefig('cascade_heatmap.png', dpi=300, bbox_inches='tight')
 ## 5d. BulkRNA-seq 功能分析知识库扩展 (Bioconductor & 工具盘点) [v0.5.4]
 
 ### 定位
-gsea-explorer 的核心数据是 GSEA + MSigDB, 但**涌现发现不应只依赖单一工具**。本节盘点**主流 BulkRNA-seq 功能分析方法**, 标注每个方法的**适用范围、与 gsea-explorer 的关系、是否可作为 gsea-explorer 输出的下游/并行**。
+gsealens-explorer 的核心数据是 GSEA + MSigDB, 但**涌现发现不应只依赖单一工具**。本节盘点**主流 BulkRNA-seq 功能分析方法**, 标注每个方法的**适用范围、与 gsealens-explorer 的关系、是否可作为 gsealens-explorer 输出的下游/并行**。
 
 > **方法论分层**:
 > 1. **过表达分析 (ORA)**: 假设驱动型, 适合"已知基因 → 找通路"
@@ -1358,16 +1358,16 @@ gsea-explorer 的核心数据是 GSEA + MSigDB, 但**涌现发现不应只依赖
 
 #### 1. clusterProfiler 系列 (Bioconductor)
 
-| 包 | 方法 | 适用范围 | 与 gsea-explorer 关系 |
+| 包 | 方法 | 适用范围 | 与 gsealens-explorer 关系 |
 |---|---|---|---|
-| **clusterProfiler** | ORA (enricher/enrichGO/enrichKEGG), GSEA (gseGO/gseKEGG), 通用 | 通用通路富集 (GO/KEGG/Reactome/MSigDB) | gsea-explorer 内部已用其 GSEA 引擎; 后续 ORA 验证可调 enricher |
-| **enrichplot** | dotplot, cnetplot, emapplot, gseaplot, ridgeplot | 富集结果可视化 | gsea-explorer 推荐的 dotplot/enrichment plot 工具 |
-| **DOSE** | DO (Disease Ontology) 富集, GSEA | 疾病本体论 | 可作为 gsea-explorer S6 的 DO 补充查询 |
+| **clusterProfiler** | ORA (enricher/enrichGO/enrichKEGG), GSEA (gseGO/gseKEGG), 通用 | 通用通路富集 (GO/KEGG/Reactome/MSigDB) | gsealens-explorer 内部已用其 GSEA 引擎; 后续 ORA 验证可调 enricher |
+| **enrichplot** | dotplot, cnetplot, emapplot, gseaplot, ridgeplot | 富集结果可视化 | gsealens-explorer 推荐的 dotplot/enrichment plot 工具 |
+| **DOSE** | DO (Disease Ontology) 富集, GSEA | 疾病本体论 | 可作为 gsealens-explorer S6 的 DO 补充查询 |
 | **meshes** | MeSH 词条富集 | MeSH 词条 | 备用, 不主推 |
 | **ReactomePA** | Reactome 通路富集 | Reactome 数据库 | 与 MSigDB C2:REACTOME 互补 (ReactomePA 是 Reactome 官方) |
 | **ggnewscale** | 多层 ggplot 配色 | 富集图叠加 | 高级可视化 |
 
-**gsea-explorer 推荐**: 已经使用 clusterProfiler 引擎。ORA 验证时调 `clusterProfiler::enricher(gene=trusted_le, TERM2GENE=...)`。
+**gsealens-explorer 推荐**: 已经使用 clusterProfiler 引擎。ORA 验证时调 `clusterProfiler::enricher(gene=trusted_le, TERM2GENE=...)`。
 
 #### 2. decoupleR (Bioconductor) [用户提及]
 
@@ -1380,11 +1380,11 @@ gsea-explorer 的核心数据是 GSEA + MSigDB, 但**涌现发现不应只依赖
 | **关键优势** | **统一接口支持多种统计方法**, 可对比 GSEA / GSVA / VIPER / AUCell 等的结果差异 |
 | **典型 regulon** | DoRothEA (TF-target), PROGENy (pathway footprint), MSigDB, 用户自定义 |
 
-**与 gsea-explorer 的关系**:
-- gsea-explorer 的 GSEA 是**通路级 × 对比组** (NES)
+**与 gsealens-explorer 的关系**:
+- gsealens-explorer 的 GSEA 是**通路级 × 对比组** (NES)
 - decoupleR 是**样本级 × 通路** (pathway activity)
-- 二者**互补**: gsea-explorer 出"哪些通路在对比组 A vs B 显著", decoupleR 出"每个样本在通路 X 上的活性分数"
-- **可作下游**: 用 gsea-explorer 找到的 top 通路, 调 decoupleR 重算样本级活性, 验证"通路活性是否与样本分组一致"
+- 二者**互补**: gsealens-explorer 出"哪些通路在对比组 A vs B 显著", decoupleR 出"每个样本在通路 X 上的活性分数"
+- **可作下游**: 用 gsealens-explorer 找到的 top 通路, 调 decoupleR 重算样本级活性, 验证"通路活性是否与样本分组一致"
 - **可作并行**: 在 S6b 阶段同时跑 decoupleR (per-sample activity), 与 GSEA NES 做 cross-validation
 
 **调用方式**:
@@ -1413,9 +1413,9 @@ acts = dc.run_viper(expr_mat, viper_regulon)
 | **GSVA** | 样本级通路活性 (非参数, KS-like) | 适合"每个样本的通路分数" |
 | **ssGSEA** | 单样本 GSEA (Barbie et al. 2009) | 单样本的通路活性 |
 
-**与 gsea-explorer 的关系**:
+**与 gsealens-explorer 的关系**:
 - GSVA 输出**样本 × 通路活性矩阵**, 可直接做跨样本热图、跨组织比较
-- **可作下游**: gsea-explorer 出 top 通路后, 调 GSVA 重算样本级分数, 出 "pathway activity heatmap across samples" (图件模板的补充)
+- **可作下游**: gsealens-explorer 出 top 通路后, 调 GSVA 重算样本级分数, 出 "pathway activity heatmap across samples" (图件模板的补充)
 - **§5c 串联热图的替代视角**: GSVA 提供"样本级", GSEA-NES 提供"对比组级", 二者交叉验证
 
 #### 4. AUCell (Bioconductor)
@@ -1425,7 +1425,7 @@ acts = dc.run_viper(expr_mat, viper_regulon)
 | **核心思路** | 对每个细胞/样本, 用 AUC (曲线下面积) 评估基因集的富集, 不需要预设分组 |
 | **典型场景** | 单细胞 RNA-seq (scRNA-seq), 但 bulk 也可用 |
 | **优势** | 不依赖基因排序或 DEG 列表, 直接对表达矩阵做 |
-| **与 gsea-explorer 的关系** | 主要用于 scRNA-seq; bulk RNA-seq 场景下与 GSEA 互补度低于 decoupleR/GSVA |
+| **与 gsealens-explorer 的关系** | 主要用于 scRNA-seq; bulk RNA-seq 场景下与 GSEA 互补度低于 decoupleR/GSVA |
 
 #### 5. VIPER (Bioconductor, Alvarez et al. 2016)
 
@@ -1433,14 +1433,14 @@ acts = dc.run_viper(expr_mat, viper_regulon)
 |---|---|
 | **核心思路** | 基于 regulon 的样本级活性推断 (类似 decoupleR 的 viper 算法) |
 | **核心优势** | 处理 regulon 方向性 (+/-) 比 GSEA 更严谨 |
-| **与 gsea-explorer 的关系** | 若用户有 TF-target regulon (如 DoRothEA), 可作下游 |
+| **与 gsealens-explorer 的关系** | 若用户有 TF-target regulon (如 DoRothEA), 可作下游 |
 
 #### 6. fgsea (Bioconductor, fast preranked GSEA)
 
 | 项 | 描述 |
 |---|---|
 | **核心思路** | GSEA 的快速 R 实现 (无 GUI, 适合 pipeline) |
-| **与 gsea-explorer 的关系** | gsea-explorer 内部可能已用其; 用户也可独立调 |
+| **与 gsealens-explorer 的关系** | gsealens-explorer 内部可能已用其; 用户也可独立调 |
 
 #### 7. 通路网络与因果
 
@@ -1459,10 +1459,10 @@ acts = dc.run_viper(expr_mat, viper_regulon)
 | **AnnotationDbi / org.Hs.eg.db / org.Mm.eg.db** | 基因 ID 转换 (SYMBOL ↔ ENSEMBL ↔ ENTREZ ↔ UNIPROT) |
 | **biomaRt** | 远程 Ensembl/Biomart 查询 |
 | **tximport** | Salmon/Kallisto 导入 (上游) |
-| **DESeq2 / edgeR / limma** | 差异分析 (上游) — gsea-explorer 不重复 |
+| **DESeq2 / edgeR / limma** | 差异分析 (上游) — gsealens-explorer 不重复 |
 | **ComplexHeatmap** | 高级热图 (推荐用于 cascade heatmap) |
 | **clusterProfiler / enrichplot** | (已列) |
-| **SummarizedExperiment** | gsea-explorer RDS 的 `dge_list` 就是 DGEList, 可转 SE |
+| **SummarizedExperiment** | gsealens-explorer RDS 的 `dge_list` 就是 DGEList, 可转 SE |
 | **iSEE / shiny** | 交互可视化 (可选) |
 | **goseq** | 长度偏倚校正的 ORA (适用于非编码或长度偏倚数据) |
 | **topGO** | GO 层级结构利用的 ORA |
@@ -1478,11 +1478,11 @@ acts = dc.run_viper(expr_mat, viper_regulon)
 | **gprofiler-official** | g:Profiler Python 客户端 | (ORA 备选) |
 | **bioinfokit** | 多种分析可视化 | (辅助) |
 
-### gsea-explorer 的方法学定位
+### gsealens-explorer 的方法学定位
 
 ```
                        ┌────────────────────────────────────────────┐
-                       │      gsea-explorer 核心方法栈 (已实现)      │
+                       │      gsealens-explorer 核心方法栈 (已实现)      │
                        └────────────────────────────────────────────┘
                                             │
    ┌────────────────────┐         ┌─────────▼──────────┐         ┌────────────────────┐
@@ -1499,7 +1499,7 @@ acts = dc.run_viper(expr_mat, viper_regulon)
                                                     │  §5d 工具盘点 (本节)
 ```
 
-### gsea-explorer 内部 R 包依赖清单
+### gsealens-explorer 内部 R 包依赖清单
 
 | 包 | 用途 | 必装 |
 |---|---|---|
@@ -1710,7 +1710,7 @@ Agent 自动生成推荐主题后, **必须展示给用户选择**, 不直接执
 ## 6d. 论文级可视化排版规范 [v0.5.4, figure planning reference]
 
 ### 定位
-gsea-explorer 不做质控类图 (PCA / Volcano / 相关性热图) — 这些是上游分析产物, 应在上游 pipeline (DESeq2/edgeR + FastQC) 输出。本节是**figure planning 规范**, 帮分析工作者把 gsea-explorer 的核心输出 (GSEA + leading edge + 涌现) 排布成可投稿的论文 figure。
+gsealens-explorer 不做质控类图 (PCA / Volcano / 相关性热图) — 这些是上游分析产物, 应在上游 pipeline (DESeq2/edgeR + FastQC) 输出。本节是**figure planning 规范**, 帮分析工作者把 gsealens-explorer 的核心输出 (GSEA + leading edge + 涌现) 排布成可投稿的论文 figure。
 
 ### 设计原则
 
@@ -1722,15 +1722,15 @@ gsea-explorer 不做质控类图 (PCA / Volcano / 相关性热图) — 这些是
 | **配色一致** | 通路方向红/蓝一致; 跨 figure 保持 |
 | **字体统一** | 8-10 pt sans-serif, 数值坐标用 Arial/Helvetica |
 
-### gsea-explorer 推荐 4 张主 figure 模板 (GSEA 核心导向)
+### gsealens-explorer 推荐 4 张主 figure 模板 (GSEA 核心导向)
 
-> **重要边界**: 本 SKILL 不负责 fig 1 (质控) / fig 2 (DE 结果) 的制作 — 那是上游 pipeline 的产物。gsea-explorer 的输出从 fig 3 (GSEA 总体) 开始。
+> **重要边界**: 本 SKILL 不负责 fig 1 (质控) / fig 2 (DE 结果) 的制作 — 那是上游 pipeline 的产物。gsealens-explorer 的输出从 fig 3 (GSEA 总体) 开始。
 
 #### Figure 3. GSEA 功能富集 (GSEA-level overview) — 3 panel
 
 | Panel | 内容 | 数据源 | 排版 |
 |---|---|---|---|
-| 3A | Hallmark 显著通路 dot plot (\|NES\| × -log10(FDR)) | `results$<contrast>$data` filter Collection=H | dot color = NES 方向 (红=正, 蓝=负), dot size = gene count |
+| 3A | Hallmark 显著通路 dot plot (\|**|NES| enrichment direction framework**| × -log10(FDR)) | `results$<contrast>$data` filter Collection=H | dot color = NES 方向 (红=正, 蓝=负), dot size = gene count |
 | 3B | GO:BP top 20 dot plot (按 cluster 排序) | `results$<contrast>$data` filter Collection=C5:GO:BP | dot plot, 主题聚类 (可用 rrvgo 二次精炼) |
 | 3C | 经典 GSEA enrichment plot (代表性 3-4 条通路) | `core_enrichment` + `genelist` | 经典 GSEA 图, 黑色竖线为 leading edge, ES 曲线, NES + pvalue 标注 |
 
@@ -1806,15 +1806,15 @@ gsea-explorer 不做质控类图 (PCA / Volcano / 相关性热图) — 这些是
 - [ ] 是否避免了"代表图"(代表性图像)而无 n 标注
 - [ ] cascade heatmap 是否标了"颜色= NES, 文字=显著性星号"双重编码
 
-### gsea-explorer 输出与论文 figure 制作衔接
+### gsealens-explorer 输出与论文 figure 制作衔接
 
-gsea-explorer 输出 `01_exploratory_report.md` + `02_discussion.md` + `deep_discussion/` 后, 衔接模板:
+gsealens-explorer 输出 `01_exploratory_report.md` + `02_discussion.md` + `deep_discussion/` 后, 衔接模板:
 
 ```markdown
-## 下一步: 论文 figure 制作 (gsea-explorer 负责范围)
+## 下一步: 论文 figure 制作 (gsealens-explorer 负责范围)
 
-基于本分析, 建议按以下顺序制作 gsea-explorer 负责的 4 张主 figure
-(质控/DE 图由上游 pipeline 负责, 不在 gsea-explorer 范围内):
+基于本分析, 建议按以下顺序制作 gsealens-explorer 负责的 4 张主 figure
+(质控/DE 图由上游 pipeline 负责, 不在 gsealens-explorer 范围内):
 
 1. **Figure 3** (GSEA dot + enrichment plot)
    - 数据已就绪: `results$<contrast>$data` + `core_enrichment` + `genelist`
@@ -1829,7 +1829,7 @@ gsea-explorer 输出 `01_exploratory_report.md` + `02_discussion.md` + `deep_dis
    - 推荐工具: Adobe Illustrator / BioRender / draw.io (本工作区已有 drawio-skill)
 
 每张 figure 的图注模板和 Discussion 引用句已在 §6d 提供, 直接复用即可。
-上游质控 (Fig 1) / DE (Fig 2) 由 FastQC + DESeq2 pipeline 负责输出, 不在 gsea-explorer 范围。
+上游质控 (Fig 1) / DE (Fig 2) 由 FastQC + DESeq2 pipeline 负责输出, 不在 gsealens-explorer 范围。
 ```
 
 ### 关键引用原则 (Discussion 中)
@@ -1854,20 +1854,20 @@ gsea-explorer 输出 `01_exploratory_report.md` + `02_discussion.md` + `deep_dis
 
 | Gate | 检查 | 失败处理 |
 |---|---|---|
-| G1 | 每个结论有 CSV 引用 + \|NES\| 值 | 回 S6 |
+| G1 | 每个结论有 CSV 引用 + \|**|NES| enrichment direction framework**| 值 | 回 S6 |
 | G2 | 无 "上调/下调/被抑制/被激活/NEG_in_left" | 回 S6 |
-| G3 | 局限性声明含 FDR + \|NES\| + 置信度 | 回 S6 |
+| G3 | 局限性声明含 FDR + \|**|NES| enrichment direction framework**| + 置信度 | 回 S6 |
 | **G4** | **全 collection 覆盖** — Hallmark + GO:BP + Reactome + KEGG 都有分析章节 | 回 S6 |
 | **G5** | **跨对比组联合分析** — 有核心签名表 + 特异通路表 + 方向一致性表 | 回 S6 |
 | **G6** | **NES 语义正确** — 无 "NEG=抑制, POS=激活" 等错误推断; POS/NEG 仅描述富集方向 | 回 S6 |
 | **G7** | **[v0.4] 深度讨论完整性** — deep_discussion/ 下有 theme_plan.md + N 个子报告 + 1 个 master (N 由 S7b.0 动态确定, ≥3 且 ≤7) | 回 S7b |
 | **G8** | **[v0.4] Leading Edge 解析** — 每个子报告包含实际基因名 (非占位符), 至少 10 个具体基因 | 回 S7b |
 | **G9** | **[v0.5.3 / v0.5.4 修订为 OPTIONAL] Leading edge CPM 过滤** — **当用户启用 CPM 加权时**, 每条被深度解读的通路必须有 trusted_le 列表 (CPM≥10 + \|logFC\|≥1 + padj<0.05), trusted/raw ratio ≥ 60%; **未启用时 G9 不适用** | 回 S5b |
-| **G10** | **[v0.5.3 / v0.5.4 修订] Figure 排版自检** — gsea-explorer 负责的 4 张主 figure (Fig 3 GSEA / Fig 4 cascade / Fig 5 leading edge / Fig 6 机制模型) 模板对齐, 颜色一致, 样本量/统计方法/星号均标注; Fig 1 (质控) / Fig 2 (DE) 不在 gsea-explorer 范围 | 回 S6d |
+| **G10** | **[v0.5.3 / v0.5.4 修订] Figure 排版自检** — gsealens-explorer 负责的 4 张主 figure (Fig 3 GSEA / Fig 4 cascade / Fig 5 leading edge / Fig 6 机制模型) 模板对齐, 颜色一致, 样本量/统计方法/星号均标注; Fig 1 (质控) / Fig 2 (DE) 不在 gsealens-explorer 范围 | 回 S6d |
 | **G11** | **[v0.5.4 新增] 多对比组 cascade heatmap** — 当分析包含 ≥3 对比组时, 必须出 cascade heatmap (§5c), 行聚类, NES 颜色 + 显著性星号双重编码 | 回 S5c |
 | **G12** | **[v0.5.2 新增] 文献验证 (PMID 都来自 MSigDB 或已验证)** — 所有 PMID 必须由 mcp__deepxiv__search_papers 或 mcp__research-tools__paper_search 验证, 禁止 bioRxiv | 回 S5 |
 | **G13** | **[v0.5.5 新增, MANDATORY] 全量 subcollection 覆盖率** — 当 RDS 包含 ≥10 个 subcollection 时, 必须输出全部 subcollection 的独立 CSV (≥10/3 对比组 = ≥30 CSV), F1-F6 主题 subagent 全部分配解读; 不允许只覆盖 H/C5/C2:REACTOME/C2:KEGG 4 类 | 回 S4 |
-| **G14** | **[v0.5.5 新增, OPTIONAL] Medium 阈值按需触发** — 默认不纳入 FDR∈[0.05, 0.25) 且 \|NES\|∈[1.0, 1.5) 的通路, 仅在用户显式提及"不显著/边缘显著/中等置信/medium threshold"或指定关键词时纳入; evidence/medium/ 目录保留 Medium CSV 作为备用资产 | N/A |
+| **G14** | **[v0.5.5 新增, OPTIONAL] Medium 阈值按需触发** — 默认不纳入 FDR∈[0.05, 0.25) 且 \|**|NES| enrichment direction framework**|∈[1.0, 1.5) 的通路, 仅在用户显式提及"不显著/边缘显著/中等置信/medium threshold"或指定关键词时纳入; evidence/medium/ 目录保留 Medium CSV 作为备用资产 | N/A |
 
 **G6 具体检查**:
 - ❌ "NEG 数量大于 POS, 提示基因集被抑制"
@@ -1897,7 +1897,7 @@ gsea_explore_{study_id}/
 ├── {contrast}_GOBP.csv        # 全量 GO:BP 显著
 ├── {contrast}_ReactKEGG.csv   # 全量 Reactome/KEGG 显著
 ├── {contrast}_leading_edge.csv
-├── {contrast}_gsealens_table.md  # GSEAlens 风格 |NES| 表
+├── {contrast}_gsealens_table.md  # |NES| enrichment direction |NES| 表
 ├── cross_contrast_joint.csv   # 跨对比组联合表
 ├── evidence/                  # SKILL 知识产物
 ├── 01_exploratory_report.md   # 主报告 (S6+S6b 数据分析)
@@ -1936,7 +1936,7 @@ gsea_explore_{study_id}/
 | v0.1 | 2026-06-13 | 初稿 |
 | v0.2 | 2026-06-13 | 平台 profile 化, 双格式审计, 真实 Capsule 端到端验证 |
 | v0.2.1 | 2026-06-13 | 用户级, Rscript 修 bug |
-| v0.3 | 2026-06-14 | R 持久 REPL, 全量提取, GSEAlens \|NES\| 框架, 多组织 crosstalk, subagent 并行 |
+| v0.3 | 2026-06-14 | R 持久 REPL, 全量提取, GSEAlens \|**|NES| enrichment direction framework**| 框架, 多组织 crosstalk, subagent 并行 |
 | v0.3.1 | 2026-06-14 | 全 collection 深度解读 (Hallmark+GO:BP+Reactome+KEGG), 跨对比组联合分析, G4/G5 门控 |
 | v0.3.2 | 2026-06-14 | NES 语义修复 (G6: 禁止"NEG=抑制"), Discussion 模块 (S7), Follow-up 探索 (S10) |
 | **v0.4** | **2026-06-14** | **并行深度讨论 (S7b)**: 5 主题并行 subagent 架构, leading edge 基因解析, C2 先验基因集涌现分析, 跨主题整合 master discussion, G7/G8 门控, S1 新增 Q6 讨论偏好 |
@@ -1944,7 +1944,7 @@ gsea_explore_{study_id}/
 | **v0.5.1** | **2026-06-15** | **MSigDB 本地知识库集成 (§3a)**: 35361 基因集元数据本地查询 (BRIEF/FULL/PMID/GEOID/AUTHORS), 强制 `get_geneset_brief` 解读规则, CGP 基因集 PMID 追溯 |
 | **v0.5.2** | **2026-06-15** | **MSigDB MCP 强绑定涌现发现 (§3a)**: 8 阶段强制调用表 (S2/S5/S6/S6b/S7/S7b/S10), 涌现发现 SOP (EXTRACT→CLUSTER→SYNTHESIZE→HYPOTHESIZE 四步法), KEGG 名称误导专项防御; **文献验证规则 (§3b)**: bioRxiv/medRxiv 工具全面禁用 (HARD BLOCK), deepxiv/research-tools 强制验证, G 门控覆盖所有 PMID 引用 |
 | **v0.5.3** | **2026-06-15** | **Leading edge CPM 强度加权 + ORA-overlap (§5b)**: 4 步加权流程, BIS (Biological Intensity Score = \|logFC\| × log2(max_mean_count+1)), 双重过滤生成 trusted_le, S6/S6b/S7b/S10 强制使用, G9 门控; **论文级可视化排版规范 (§6d)**: 5 张主 figure 模板 (Fig1 质控/Fig2 DE/Fig3 GSEA/Fig4 leading edge+涌现/Fig5 机制模型), supplementary 清单, G10 门控, Discussion 引用模板, Figure→§6d 衔接清单 |
-| **v0.5.4** | **2026-06-15** | **多对比组 GSEA 串联热图 (§5c)**: 通路 × 对比组 NES 矩阵 + Ward.D2 聚类 + 显著性星号叠加 + 4 步涌现归纳 (All-Positive/All-Negative/Flip/Mixed/A-only/B-only 等模式) + G11 门控; **BulkRNA-seq 知识库扩展 (§5d)**: clusterProfiler/GSVA/decoupleR/VIPER/AUCell/fgsea/rrvgo/ComplexHeatmap 工具盘点, 与 gsea-explorer 关系标注, Roadmap; **§5b 降为 OPTIONAL 并行** (G9 修订); **§6d 重组**: 移除 Fig1 质控/Fig2 DE (上游范围), 保留 Fig3 GSEA dot+enrichment, 新增 Fig4 cascade heatmap (核心), Fig5 leading edge+ORA-overlap, Fig6 机制模型 |
+| **v0.5.4** | **2026-06-15** | **多对比组 GSEA 串联热图 (§5c)**: 通路 × 对比组 NES 矩阵 + Ward.D2 聚类 + 显著性星号叠加 + 4 步涌现归纳 (All-Positive/All-Negative/Flip/Mixed/A-only/B-only 等模式) + G11 门控; **BulkRNA-seq 知识库扩展 (§5d)**: clusterProfiler/GSVA/decoupleR/VIPER/AUCell/fgsea/rrvgo/ComplexHeatmap 工具盘点, 与 gsealens-explorer 关系标注, Roadmap; **§5b 降为 OPTIONAL 并行** (G9 修订); **§6d 重组**: 移除 Fig1 质控/Fig2 DE (上游范围), 保留 Fig3 GSEA dot+enrichment, 新增 Fig4 cascade heatmap (核心), Fig5 leading edge+ORA-overlap, Fig6 机制模型 |
 | **v0.5.5** | **2026-06-16** | **rds_path 路径参数化与用户驱动 (§1.0 + S0.1)**: 新增 §1.0 "获取 RDS 路径" 段落, 显式询问用户 (5 种来源), 禁用所有硬编码路径, session$rds_path 持久化, file.exists() 验证, 多文件场景一次性收集; S0 拆分为 S0.1 (询问) / S0.2 (启动 R + readRDS) / S0.3 (验证 RDS 完整性); 移除 SKILL.md §1 中的 ZYH 硬编码示例; agent.md 增加 S0.1 启动第一动作 MANDATORY 规则
 | **v0.5.5 (2026-06-16 第 2 次增量)** | **全量 subcollection 覆盖规则 (§5e)**: 强制覆盖 RDS 中全部 subcollection (本研究 26 个), 禁止只覆盖 H/C5/C2:REACTOME/C2:KEGG 4 类; LLM 上下文足够大, 必须全量, 不要 top-N, 拆分 subagent 并行; **Medium 阈值模块 (§2.7)**: 默认不纳入 |FDR∈[0.05, 0.25) ∩ |NES|∈[1.0, 1.5)| 通路, 仅在用户显式提及"不显著/边缘显著/中等置信/medium threshold"或指定关键词时纳入; evidence/medium/ 目录保留 Medium CSV 作为备用资产; **Agent 能力清单 (§4.5)**: 主 Agent 10 项能力 + Subagent F1-F4 详细能力清单 (输入/聚类规则/MSigDB BRIEF 数/涌现假说数/输出文件); Subagent Prompt 模板强制规范 (全量纳入, 不 top-N, ≥15 BRIEF, bioRxiv 禁用); Subagent 启动时机 (S4 后立即 F1-F4, S6 后 A-E, S7b F5 可选, S7 末 Master); Subagent 失败回退策略 (4 类); **G 门控新增 G13 (MANDATORY) + G14 (OPTIONAL)**: G13 验证 subcollection 覆盖率 = 100%, G14 验证 Medium 阈值按需触发; **教训 (来源: 真实 gsealens Capsule, 2026-06-16)**: 分析中, 上一版 v0.5.4 漏过 17 个 subcollection (CGP 463, WikiPathways 175, GO:CC/MF 146+113, HPO 210, IMMUNESIGDB 493, VAX 33, KEGG_MEDICUS 55, BIOCARTA 33, PID 62, 3CA 46, CGN 70, CM 66, TFT 39, MIR 16 通路) — 用户要求"全量分析, LLM 不要 top-N"; **涌现假说示例 (F1-F4)**: PSC-SASP 假说 (F1), 四波响应失衡 (F1), Complex I 全亚基塌缩 (F3), 衰老特异 EMT_3 + Treg 主导免疫豁免 (F4) |
 
@@ -1996,7 +1996,7 @@ gsea_explore_{study_id}/
 ### 11.5 全局 SKILL 同步原则 (新)
 
 > **SKILL 更新必须同步到 2 个位置**:
-> 1. **内联 SKILL.md** (`<your_skills_dir>/gsea-explorer/SKILL.md`) — Agent 实际读取源
+> 1. **内联 SKILL.md** (`<your_skills_dir>/gsealens-explorer/SKILL.md`) — Agent 实际读取源
 > 2. **项目本地 SKILL_vX.Y.Z.md** (`{out_dir}/SKILL_vX.Y.Z.md`) — 本项目参考
 >
 > 两者必须保持一致。如果只在一个位置更新, 下次调用 Agent 会读取过时的 SKILL。 |

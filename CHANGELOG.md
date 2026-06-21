@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Project renamed: `gsea-explorer` → `gsealens-explorer`**. Resolves a three-way naming collision:
+  - `gsealens` (lowercase) stays as the platform profile name pointing to the upstream [GSEAlens](https://github.com/DDL095/GSEAlens) R package schema
+  - `gsealens-explorer` is now this project (the interpretation agent)
+  - The interpretation methodology is renamed from "GSEAlens-style |NES| framework" to the neutral "|NES| enrichment direction framework", removing the methodology/package conflation
+  - "GSEA Explorer" (used as the agent role title) replaced with "GSEAlens Explorer" to avoid collision with the Broad Institute's desktop GSEA tool
+- Renamed skill files: `gsea-explorer.agent.md` / `gsea-explorer.md` / `agents/gsea-explorer.md` → `gsealens-explorer.*`
+- Renamed `references/gsealens_nes_prompt.md` → `references/nes_direction_prompt.md` to match the methodology decoupling
+- `tests/test_skill_structure.py` leakage patterns now also flag the legacy `gsea-explorer` / `GSEA Explorer` names so accidental reintroduction is caught
+- GitHub repository renamed: `DDL095/gsea-explorer` → `DDL095/gsealens-explorer` (old URL redirects automatically)
+
 ### Added
 - Public repository scaffold: LICENSE (MIT), README, CONTRIBUTING, CITATION.cff.
 - Dual deploy scripts (`deploy/deploy_to_copilot.{ps1,sh}`) for local personalization layer workflow.
@@ -53,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Persistent R REPL via the `r-interactive` skill — no more `Rscript` one-shot.
 - Full-significant-pathway extraction (removed top-30 cap).
-- GSEAlens-style |NES| interpretation framework with 3-tier confidence (High / Medium / Low).
+- |NES| enrichment direction interpretation framework with 3-tier confidence (High / Medium / Low).
 - Multi-tissue crosstalk architecture (§3).
 
 ## [0.2.1] — 2026-04

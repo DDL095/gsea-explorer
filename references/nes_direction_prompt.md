@@ -1,7 +1,7 @@
-# GSEAlens |NES| 解读 Prompt 模板 (gsea-explorer v0.3)
+# |NES| enrichment direction 解读 Prompt 模板 (gsealens-explorer v0.3)
 
 > 来源: ZYH 自研 [GSEAlens](https://github.com/DDL095/GSEAlens) `17_shiny_mod_AI.R`
-> 整理: gsea-explorer agent v0.3
+> 整理: gsealens-explorer agent v0.3
 
 ---
 
@@ -126,8 +126,8 @@ df$absNES      <- abs(df$NES)
 
 | 级别 | 条件 | 含义 |
 |---|---|---|
-| **高置信** | \|NES\| ≥ 1.5 且 FDR < 0.05 | 可直接用于结论 |
-| **中置信** | \|NES\| ≥ 1.0 且 FDR < 0.25 | 需交叉验证 |
+| **高置信** | \|**|NES| enrichment direction framework**| ≥ 1.5 且 FDR < 0.05 | 可直接用于结论 |
+| **中置信** | \|**|NES| enrichment direction framework**| ≥ 1.0 且 FDR < 0.25 | 需交叉验证 |
 | **低置信** | 其他 | 仅供参考 |
 
 ---
@@ -140,12 +140,12 @@ df$absNES      <- abs(df$NES)
 
 **统计概览**: 总计 {total} 个通路 | 高置信: {high} | 中置信: {mod} | 低置信: {low}
 
-| # | 通路 ID | \|NES\| | 富集方向 | FDR | 描述 | Leading Edge 基因 |
+| # | 通路 ID | \|**|NES| enrichment direction framework**| | 富集方向 | FDR | 描述 | Leading Edge 基因 |
 |:--:|:-----------|:----:|:-----------:|:------:|:--------------|:-------------------|
 {table}
 
 **字段说明**:
-- **\|NES\|**: 绝对标准化富集分数。|NES| ≥ 1.5 表示显著富集; |NES| ≥ 2.0 表示强富集
+- **\|**|NES| enrichment direction framework**|**: 绝对标准化富集分数。|NES| ≥ 1.5 表示显著富集; |NES| ≥ 2.0 表示强富集
 - **富集方向**: 富集在 {left_group} 表示在 {left_group} 组激活; 富集在 {right_group} 表示在 {right_group} 组激活
 - **FDR**: 多重检验校正后的 P 值。FDR < 0.25 是 MSigDB 标准阈值
 - **Leading Edge 基因**: 核心贡献基因, 理解调控机制的关键
@@ -195,7 +195,7 @@ df$absNES      <- abs(df$NES)
 
 **解读流程** (每个 collection 独立执行):
 1. 读取对应 CSV (如 `{contrast}_GOBP.csv`)
-2. 按 \|NES\| 排序, 取 top 50 显著通路
+2. 按 \|**|NES| enrichment direction framework**| 排序, 取 top 50 显著通路
 3. 按功能聚类 (如: 炎症相关 GO:BP 一组, 代谢相关一组, 细胞周期一组)
 4. 每个聚类给出生物学意义总结
 5. 识别聚类间的交叉 (如: 炎症 GO:BP + NF-κB Reactome = 一致的炎症主题)
@@ -237,4 +237,4 @@ df$absNES      <- abs(df$NES)
 2. 哪些通路只在衰老组显著? → 衰老 × 损伤交互
 3. 哪些通路只在年轻组显著? → 年轻损伤响应
 4. 同一通路方向是否一致? → 稳定效应 vs 代偿
-5. 同一通路 \|NES\| 如何变化? → 衰老加剧 vs 衰老抑制
+5. 同一通路 \|**|NES| enrichment direction framework**| 如何变化? → 衰老加剧 vs 衰老抑制

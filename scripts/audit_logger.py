@@ -1,5 +1,5 @@
 """
-audit_logger.py — Dual-format audit log (gsea-explorer v0.2.1)
+audit_logger.py — Dual-format audit log (gsealens-explorer v0.2.1)
 Writes both audit.log (text) and audit.jsonl (JSON Lines).
 
 Usage:
@@ -17,7 +17,7 @@ from typing import Any, Optional
 
 
 class AuditLogger:
-    def __init__(self, out_dir: str, agent_name: str = "gsea-explorer", version: str = "0.2.1"):
+    def __init__(self, out_dir: str, agent_name: str = "gsealens-explorer", version: str = "0.2.1"):
         self.out_dir = out_dir
         self.agent_name = agent_name
         self.version = version

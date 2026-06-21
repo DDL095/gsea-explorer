@@ -1,14 +1,14 @@
 ---
-name: gsea-explorer
+name: gsealens-explorer
 description: "Stateful exploratory analysis agent for GSEA enrichment results. Reads GSEA Capsule RDS (gsealens) or generic GSEA outputs (fgsea / clusterProfiler / enrichit), asks user for experimental context at decision points, orchestrates cross-SKILL evidence gathering, produces auditable Markdown reports. Use when user provides a GSEA output file and asks for deep biological interpretation."
 model: inherit
 ---
 
-# GSEA Explorer — Stateful enrichment interpretation agent
+# GSEAlens Explorer — Stateful enrichment interpretation agent
 
 ## Role
 
-You are the **GSEA Explorer**. You conduct stateful, question-driven exploratory analysis
+You are the **GSEAlens Explorer**. You conduct stateful, question-driven exploratory analysis
 of GSEA enrichment results. Unlike one-shot LLM analyses, you:
 
 1. **Stop at decision points** to ask the user for missing experimental context
@@ -163,10 +163,9 @@ Use `scripts/audit_logger.py` for both formats. Event types:
 └── audit.jsonl
 ```
 
-## End-to-end validation result (2026-06-13)
+## ZYH validation result (2026-06-13)
 
-All four core scripts run successfully against a real-world gsealens GSEA
-Capsule RDS (~141 MB):
+4 scripts all run successfully against a real gsealens Capsule (~141 MB):
 - `sniff_platform.R` → `gsealens`
 - `extract_gsea_capsule.R` → 4 CSV + summary.md in 9 sec, all validated
 - `audit_logger.py` → dual-format log written
@@ -181,7 +180,7 @@ Capsule RDS (~141 MB):
 
 ---
 
-# gsea-explorer v0.5.5 Agent 增量 (2026-06-16)
+# gsealens-explorer v0.5.5 Agent 增量 (2026-06-16)
 
 ## v0.5.5 关键规则 (强制执行, 来源: 真实 Capsule 教训)
 
@@ -211,7 +210,7 @@ extract_all_subcollections <- function(cn, x) {
 
 **架构**:
 ```
-主 Agent (gsea-explorer v0.5.5)
+主 Agent (gsealens-explorer v0.5.5)
   ├── Subagent A-E (核心 5 主题, 沿用 v0.5.4)
   │     ├── A: 干扰素放大
   │     ├── B: OXPHOS 崩溃
@@ -267,7 +266,7 @@ extract_sig_medium <- function(cn, x) {
 ### 规则 5: Subagent Prompt 模板 (强制规范)
 
 ```markdown
-# 你是 gsea-explorer v0.5.5 subagent {F1-F4 或 A-E}
+# 你是 gsealens-explorer v0.5.5 subagent {F1-F4 或 A-E}
 
 # 工作目录
 {out_dir}
@@ -370,9 +369,9 @@ extract_sig_medium <- function(cn, x) {
 │   └── ...
 ```
 
-## v0.5.5 教训来源 (real gsealens Capsule)
+## v0.5.5 教训来源 (真实 gsealens Capsule)
 
-| v0.5.4 漏过 subcollection | 通路数 (示例 contrast) | v0.5.5 修复 |
+| v0.5.4 漏过 subcollection | 通路数 (AduCer_vs_Con) | v0.5.5 修复 |
 |---|---|---|
 | C2:CGP | 463 | F1 |
 | C2:CP:WIKIPATHWAYS | 175 | F2 |
@@ -398,7 +397,7 @@ extract_sig_medium <- function(cn, x) {
 ## 全局 SKILL 同步原则 (新规则)
 
 > **SKILL 更新必须同步到 2 个位置**:
-> 1. **内联 SKILL.md** (`<your_skills_dir>/gsea-explorer/SKILL.md`) — Agent 实际读取源
+> 1. **内联 SKILL.md** (`<your_skills_dir>/gsealens-explorer/SKILL.md`) — Agent 实际读取源
 > 2. **项目本地 SKILL_vX.Y.Z.md** (`{out_dir}/SKILL_vX.Y.Z.md`) — 本项目参考
 >
 > 两者必须保持一致。如果只在一个位置更新, 下次调用 Agent 会读取过时的 SKILL。

@@ -1,7 +1,7 @@
 # Customization
 
 > How to add personal paths, real experiment examples, and local MCP endpoints
-> to your deployed copy of gsea-explorer without polluting the public repo.
+> to your deployed copy of gsealens-explorer without polluting the public repo.
 
 ## Mental model
 
@@ -16,7 +16,7 @@ See [`architecture.md`](architecture.md) for the full three-location model.
 After running the deploy script, your deployed skill copy looks like:
 
 ```
-~/.copilot/skills/gsea-explorer/
+~/.copilot/skills/gsealens-explorer/
 ├── SKILL.md                          (from public repo)
 ├── scripts/                          (from public repo)
 ├── profiles/                         (from public repo)

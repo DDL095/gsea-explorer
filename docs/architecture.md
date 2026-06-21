@@ -22,7 +22,7 @@ flowchart LR
         L2["Real experiment examples"]
         L3["Local MCP endpoints"]
     end
-    subgraph DEPLOY ["3. Deployed skill copy (~/.copilot/skills/gsea-explorer/)"]
+    subgraph DEPLOY ["3. Deployed skill copy (~/.copilot/skills/gsealens-explorer/)"]
         D1["Fresh copy of source repo"]
         D2[".local_overrides/ preserved across deploys"]
     end
@@ -52,7 +52,7 @@ flowchart LR
 
 ### Location 3 — Deployed skill copy (private)
 
-- What: `~/.copilot/skills/gsea-explorer/` (or wherever your Copilot install reads skills from).
+- What: `~/.copilot/skills/gsealens-explorer/` (or wherever your Copilot install reads skills from).
 - Contents: fresh copy of location 1 + preserved `.local_overrides/` from location 2.
 - Refresh model: re-run `deploy_to_copilot.ps1` whenever you `git pull` the source repo.
 

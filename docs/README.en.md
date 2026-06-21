@@ -1,4 +1,4 @@
-# gsea-explorer (English overview)
+# gsealens-explorer (English overview)
 
 > Stateful, question-driven exploratory analysis framework for GSEA enrichment
 > results. Designed for use as a Copilot skill or a standalone LLM-agent role.
@@ -14,7 +14,7 @@ file is a short English summary for international visitors and search engines.
   contrast design, hypothesis) before interpreting.
 - Extracts the full significant pathway set (no top-N cap) via a persistent
   R REPL.
-- Interprets enrichment direction using a GSEAlens-style **|NES| framework**:
+- Interprets enrichment direction using a |NES| enrichment direction **|NES|**|NES| enrichment direction framework**:
   NES > 0 → enriched in `left_group`, NES < 0 → enriched in `right_group`. The
   sign encodes direction only, never up/down regulation.
 - Classifies cross-contrast direction changes into six modes: `true_flip`,
@@ -25,11 +25,11 @@ file is a short English summary for international visitors and search engines.
 ## Quick start
 
 ```bash
-git clone https://github.com/DDL095/gsea-explorer.git
-bash gsea-explorer/deploy/deploy_to_copilot.sh
+git clone https://github.com/DDL095/gsealens-explorer.git
+bash gsealens-explorer/deploy/deploy_to_copilot.sh
 ```
 
-Then invoke the `gsea-explorer` skill from Copilot Chat and point it at your
+Then invoke the `gsealens-explorer` skill from Copilot Chat and point it at your
 GSEA RDS file.
 
 ## Status

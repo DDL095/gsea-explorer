@@ -4,7 +4,7 @@
 
 ## North star
 
-Make gsea-explorer the de facto interpretation layer for anyone running GSEA on
+Make gsealens-explorer the de facto interpretation layer for anyone running GSEA on
 bulk transcriptomics data — usable from Copilot Chat, from any LLM agent
 framework, and eventually as a plain R/Python library for non-LLM users.
 

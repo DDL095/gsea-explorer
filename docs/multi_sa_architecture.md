@@ -7,7 +7,7 @@
 
 ## Motivation
 
-Today gsea-explorer runs as a single stateful agent that walks S0 → S8
+Today gsealens-explorer runs as a single stateful agent that walks S0 → S8
 sequentially. Three pain points motivate the move to multi-SA:
 
 1. **R REPL reload waste**. Each `Rscript` invocation re-reads the RDS. A 141 MB

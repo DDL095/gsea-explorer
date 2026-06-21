@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run_full_pipeline.sh — One-shot S0→S8 driver (gsea-explorer v0.2.1)
+# run_full_pipeline.sh — One-shot S0→S8 driver (gsealens-explorer v0.2.1)
 #
 # Usage:
 #   bash run_full_pipeline.sh <rds_path> <output_dir> [contrast1 contrast2 ...]
@@ -13,7 +13,7 @@
 #
 # This script handles the mechanical parts. The LLM-driven phases
 # (S1 questions, S2 hypotheses, S3 plan, S6 synthesis) are still
-# orchestrated by the gsea-explorer subagent.
+# orchestrated by the gsealens-explorer subagent.
 
 set -euo pipefail
 
@@ -94,7 +94,7 @@ This directory holds output from cross-SKILL calls in S5:
 - `literature.json` — mcp_unified-acade (PubMed)
 - `ppi_network.json` — gdm-string-database (optional)
 
-These are populated by the gsea-explorer subagent during S5.
+These are populated by the gsealens-explorer subagent during S5.
 EOF
 log "Evidence dir created. Subagent will populate in S5."
 

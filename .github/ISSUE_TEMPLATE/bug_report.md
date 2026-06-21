@@ -30,7 +30,7 @@ labels: bug
 
 ## Environment
 
-- gsea-explorer version:
+- gsealens-explorer version:
 - R version:
 - Platform (gsealens / clusterProfiler / fgsea / enrichit):
 - OS:

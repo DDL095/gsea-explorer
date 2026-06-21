@@ -1,4 +1,4 @@
-## sniff_platform.R — Detect GSEA output platform (gsea-explorer v0.2.1)
+## sniff_platform.R — Detect GSEA output platform (gsealens-explorer v0.2.1)
 ##
 ## Usage:
 ##   Rscript sniff_platform.R <rds_path>

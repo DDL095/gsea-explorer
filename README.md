@@ -195,7 +195,7 @@ flowchart LR
 
 详见 [`docs/roadmap.md`](docs/roadmap.md)。近期重点:
 
-- **v0.6**: clusterProfiler 一等公民化 + 测试套件 + 多 SA 并行架构 POC
+- **v0.6**: clusterProfiler 一等公民化 + 测试套件 + [多 SA 并行架构 POC](docs/multi_sa_architecture.md)
 - **v0.7**: MSigDB 解耦 (msigdbr R 包作核心, MCP 作可选增强) + 可视化代码落地
 - **v1.0**: 测试覆盖 80%+ + 真实用户案例 + JOSS 投稿
 

@@ -40,19 +40,8 @@ first.
 ### v0.6.2 — Multi-SA parallel architecture POC
 
 This is the differentiating feature for v0.6. Instead of one SA doing
-everything sequentially, split into:
-
-- **Main SA** — state machine, dispatch, quality control, synthesis
-- **Extract SA** — the only one holding the R REPL; exposes a shared
-  `terminal_id` so other SAs can query the same R session without re-loading
-  the RDS
-- **Interpretation SA pool** — N parallel SAs, one per collection (H / C5:GO:BP
-  / C2:REACTOME / C2:KEGG / cross-contrast cascade)
-- **Synthesis SA** — merges per-collection reports, runs emergent discovery
-  SOP, writes the main report
-
-The POC will validate the R-REPL-sharing mechanism (`terminal_id` handoff via
-`session_state.json`) and the parallel dispatch fan-out / fan-in pattern.
+everything sequentially, split into a fan-out / fan-in pattern with a shared
+R REPL. Full design in [`multi_sa_architecture.md`](multi_sa_architecture.md).
 
 ## v0.7 — Decoupling and visualization
 

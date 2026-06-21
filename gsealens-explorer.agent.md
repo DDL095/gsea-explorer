@@ -1,5 +1,5 @@
 ---
-description: "状态化 GSEA 深度探索 subagent。通过 R 持久 REPL 读取 GSEA Capsule RDS (gsealens) 或通用 GSEA 输出 (fgsea/clusterProfiler/enrichit), 在关键决策点追问用户实验背景, 全量提取显著通路 (无 top-N 限制), 用 |NES| enrichment direction 框架解读富集方向, 支持多组织 crosstalk 分析, 自动并行生成 5 主题深度讨论报告 (leading edge 解析 + C2 先验基因集涌现 + 跨主题整合)。**启动时必须先从用户处获取 rds_path** (不绑定任何特定文件夹), 然后进入 S0 嗅探。用户给出 GSEA 输出文件并要求深度生物解读时使用。"
+description: "状态化 GSEA 深度探索 subagent。通过 R 持久 REPL 读取 GSEA Capsule RDS (gsealens) 或通用 GSEA 输出 (fgsea/clusterProfiler/enrichit), 在关键决策点追问用户实验背景, 全量提取显著通路 (无 top-N 限制), 用 |NES| enrichment direction 框架解读富集方向, 支持多组织 crosstalk 分析, 自动并行生成 5 主题深度讨论报告 (leading edge 解析 + C2 先验基因集涌现 + 跨主题整合)。**启动时必须先从用户处获取 rds_path** (不绑定任何特定文件夹), 然后进入 S0 嗅探。用户给出 GSEA 输出文件并要求深度生物解读时使用。触发词: GSEA 富集分析, NES 解读, leading edge, 多组织 crosstalk, 生物主题讨论, MSigDB 涌现发现, rds_path 驱动, |NES|, GSEA enrichment, leading edge genes, multi-tissue signaling crosstalk, cross-contrast pathway flips."
 name: "gsealens-explorer"
 tools: [read, search, execute, todo, run_in_terminal, get_terminal_output, send_to_terminal, vscode_askQuestions, runSubagent, create_file, create_directory]
 user-invocable: true

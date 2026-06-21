@@ -1,6 +1,6 @@
 ---
 name: gsealens-explorer
-description: "Stateful exploratory analysis agent for GSEA enrichment results. Reads GSEA Capsule RDS (gsealens) or generic GSEA outputs (fgsea / clusterProfiler / enrichit). Asks user for experimental context at decision points, interprets NES-based enrichment direction, leading-edge genes, multi-tissue crosstalk, and cross-contrast pathway flips. Produces auditable Markdown reports. Use when user provides a GSEA output file and asks for deep biological interpretation of enrichment patterns, |NES| values, leading edge genes, or multi-tissue signaling crosstalk."
+description: "Stateful exploratory analysis agent for GSEA enrichment results. Reads GSEA Capsule RDS (gsealens) or generic GSEA outputs (fgsea / clusterProfiler / enrichit). Asks user for experimental context at decision points, interprets NES-based enrichment direction, leading-edge genes, multi-tissue crosstalk, and cross-contrast pathway flips. Produces auditable Markdown reports. Use when user provides a GSEA output file and asks for deep biological interpretation of enrichment patterns, |NES| values, leading edge genes, or multi-tissue signaling crosstalk. 状态化 GSEA 富集分析 agent；GSEA 富集分析、NES 解读、leading edge、多组织 crosstalk、生物主题讨论、MSigDB 涌现发现、rds_path 驱动；采用 |NES| 富集方向 framework 解读方向。"
 model: inherit
 ---
 

@@ -20,54 +20,79 @@ LOCATIONS = [
     {
         'label': 'C:prompts/gsealens-explorer.agent.md',
         'path':  Path('c:/Users/Administrator/AppData/Roaming/Code/User/prompts/gsealens-explorer.agent.md'),
-        'lang':  'zh',
+        'lang':  'zh-primary',
         'role':  'agent (top-level user-invocable)',
-        'must_have': ['|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'rds_path', '多组织 crosstalk'],
+        # Bilingual trigger: must contain all of these so both Chinese and
+        # English keyword inputs will load this skill/agent.
+        'must_have': [
+            '|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
+            'clusterProfiler', 'rds_path', '多组织 crosstalk',
+            'GSEA 富集分析', 'NES 解读', '生物主题讨论', 'MSigDB 涌现发现',
+            'enrichit', 'fgsea',  # cross-platform reach
+        ],
     },
     {
         'label': 'C:skill/SKILL.md',
         'path':  Path('c:/Users/Administrator/.copilot/skills/gsealens-explorer/SKILL.md'),
-        'lang':  'zh',
+        'lang':  'zh-primary',
         'role':  'skill (master definition)',
-        'must_have': ['|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'rds_path', '多组织 crosstalk',
-                      'GSEA 富集分析', 'NES 解读', '生物主题讨论',
-                      'MSigDB 涌现发现'],
+        'must_have': [
+            '|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
+            'clusterProfiler', 'rds_path', '多组织 crosstalk',
+            'GSEA 富集分析', 'NES 解读', '生物主题讨论', 'MSigDB 涌现发现',
+            'enrichit', 'fgsea',
+        ],
     },
     {
         'label': 'C:skill/agents/gsealens-explorer.md',
         'path':  Path('c:/Users/Administrator/.copilot/skills/gsealens-explorer/agents/gsealens-explorer.md'),
-        'lang':  'en',
+        'lang':  'en-primary-zh-appended',
         'role':  'agent role (sub-skill invocation)',
-        'must_have': ['GSEA', 'NES', 'RDS', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'enrichit', 'fgsea'],
+        # Bilingual: English body + Chinese trigger tail
+        'must_have': [
+            'GSEA', 'NES', 'RDS', 'leading edge', 'gsealens',
+            'clusterProfiler', 'enrichit', 'fgsea',
+            # Chinese tail keywords for Chinese-speaking users
+            'GSEA 富集分析', 'NES 解读', '多组织 crosstalk',
+            '生物主题讨论', 'MSigDB 涌现发现', 'rds_path',
+        ],
     },
     {
         'label': 'D:SKILL.md',
         'path':  REPO / 'SKILL.md',
-        'lang':  'zh',
+        'lang':  'zh-primary',
         'role':  'skill (master definition, public repo source)',
-        'must_have': ['|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'rds_path', '多组织 crosstalk',
-                      'GSEA 富集分析', 'NES 解读', '生物主题讨论',
-                      'MSigDB 涌现发现'],
+        'must_have': [
+            '|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
+            'clusterProfiler', 'rds_path', '多组织 crosstalk',
+            'GSEA 富集分析', 'NES 解读', '生物主题讨论', 'MSigDB 涌现发现',
+            'enrichit', 'fgsea',
+        ],
     },
     {
         'label': 'D:agents/gsealens-explorer.md',
         'path':  REPO / 'agents/gsealens-explorer.md',
-        'lang':  'en',
+        'lang':  'en-primary-zh-appended',
         'role':  'agent role (sub-skill invocation, public repo source)',
-        'must_have': ['GSEA', 'NES', 'RDS', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'enrichit', 'fgsea'],
+        'must_have': [
+            'GSEA', 'NES', 'RDS', 'leading edge', 'gsealens',
+            'clusterProfiler', 'enrichit', 'fgsea',
+            # Chinese tail keywords
+            'GSEA 富集分析', 'NES 解读', '多组织 crosstalk',
+            '生物主题讨论', 'MSigDB 涌现发现', 'rds_path',
+        ],
     },
     {
         'label': 'D:gsealens-explorer.agent.md',
         'path':  REPO / 'gsealens-explorer.agent.md',
-        'lang':  'zh',
+        'lang':  'zh-primary',
         'role':  'agent (top-level user-invocable, public repo source)',
-        'must_have': ['|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
-                      'clusterProfiler', 'rds_path', '多组织 crosstalk'],
+        'must_have': [
+            '|NES|', 'RDS', 'NES', 'leading edge', 'gsealens',
+            'clusterProfiler', 'rds_path', '多组织 crosstalk',
+            'GSEA 富集分析', 'NES 解读', '生物主题讨论', 'MSigDB 涌现发现',
+            'enrichit', 'fgsea',
+        ],
     },
 ]
 
